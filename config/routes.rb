@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   get 'items/index'
   root to: 'items#index'
 
-  resources :items, only: [:destroy]
+  # resources :items, only: [:destroy]
 end
