@@ -16,7 +16,12 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("Email can't be blank")
     end
-    it "重複したemailが存在する場合登録できない" do
+    it "emailが@を含まなければ登録できないこと" do
+      @user.email = 'testsample.com'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Email is invalid")
+    end
+    it "emailが一意性でないと登録できない" do
       @user.save
       another_user = FactoryBot.build(:user, email:@user.email)
       another_user.valid?
@@ -32,6 +37,24 @@ RSpec.describe User, type: :model do
       @user.password_confirmation = '12345'
       @user.valid?
       expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)")
+    end
+    it 'passwordが英語のみでは登録できない' do
+      @user.password = 'abcdef'
+      @user.password_confirmation = 'abcdef'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password is invalid")
+    end
+    it 'passwordが数字のみでは登録できない' do
+      @user.password = '123456'
+      @user.password_confirmation = '123456'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password is invalid")
+    end
+    it 'passwordが全角では登録できない' do
+      @user.password = '１２３ｂｃｄ'
+      @user.password_confirmation = '１２３ｂｃｄ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password is invalid")
     end
     it "passwordとpassword_confirmationが不一致では登録できない" do
       @user.password = '123456'
@@ -49,6 +72,12 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("First name can't be blank")
     end
+    it "last_name,first_nameは全角漢字・平仮名・カタカナ以外では登録できない" do
+      @user.last_name = 'aaa'
+      @user.first_name = 'bbb'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name is invalid","First name is invalid")
+    end
     it "last_renameが空だと登録できない" do
       @user.last_rename = ''
       @user.valid?
@@ -59,6 +88,12 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("First rename can't be blank")
     end
+    it "last_rename,first_renameは全角カタカナ以外では登録できない" do
+      @user.last_rename = 'ｱｱｱ'
+      @user.first_rename = 'ｲｲｲ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last rename is invalid","First rename is invalid")
+    end
     it "birthdayが空だと登録できない" do
       @user.birthday = ''
       @user.valid?
@@ -66,10 +101,3 @@ RSpec.describe User, type: :model do
     end
   end
 end
-
-#   "Password can't be blank",
-#   "Last name can't be blank",
-#   "First name can't be blank",
-#   "Last rename can't be blank",
-#   "First rename can't be blank",
-#   "Birthday can't be blank"]
