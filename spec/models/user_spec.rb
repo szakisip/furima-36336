@@ -67,32 +67,40 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("Last name can't be blank")
     end
+    it "last_nameは全角漢字・平仮名・カタカナ以外では登録できない" do
+      @user.last_name = 'aaa'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name is invalid")
+    end
     it "first_nameが空だと登録できない" do
       @user.first_name = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("First name can't be blank")
     end
-    it "last_name,first_nameは全角漢字・平仮名・カタカナ以外では登録できない" do
-      @user.last_name = 'aaa'
+    it "first_nameは全角漢字・平仮名・カタカナ以外では登録できない" do
       @user.first_name = 'bbb'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last name is invalid","First name is invalid")
+      expect(@user.errors.full_messages).to include("First name is invalid")
     end
     it "last_renameが空だと登録できない" do
       @user.last_rename = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("Last rename can't be blank")
     end
+    it "last_renameは全角カタカナ以外では登録できない" do
+      @user.last_rename = 'ｱｱｱ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last rename is invalid")
+    end
     it "first_renameが空だと登録できない" do
       @user.first_rename = ''
       @user.valid?
       expect(@user.errors.full_messages).to include("First rename can't be blank")
     end
-    it "last_rename,first_renameは全角カタカナ以外では登録できない" do
-      @user.last_rename = 'ｱｱｱ'
+    it "first_renameは全角カタカナ以外では登録できない" do
       @user.first_rename = 'ｲｲｲ'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Last rename is invalid","First rename is invalid")
+      expect(@user.errors.full_messages).to include("First rename is invalid")
     end
     it "birthdayが空だと登録できない" do
       @user.birthday = ''
