@@ -5,6 +5,10 @@ class ItemsController < ApplicationController
   def index
   end
 
+  def new
+  end
+
+
   private
   # def move_to_index
   #   unless user_signed_in?
