@@ -58,67 +58,67 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
       end
-      it 'カテゴリーが空白では登録できない' do
-        @item.category_id = nil
+      it 'カテゴリーが"---"では登録できない' do
+        @item.category_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank")
-      end
-      
-      it '商品の状態が空白では登録できない' do
-        @item.condition_id = nil
-        @item.valid?
-        expect(@item.errors.full_messages).to include("Condition can't be blank")
+        expect(@item.errors.full_messages).to include("Category must be other than 0")
       end
       it '商品の状態が空白では登録できない' do
         @item.condition_id = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Condition can't be blank")
       end
-
-      it '配送料の負担が空白では登録できない' do
-        @item.shipping_charge_id = nil
+      it '商品の状態が"---"では登録できない' do
+        @item.condition_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping charge can't be blank")
+        expect(@item.errors.full_messages).to include("Condition must be other than 0")
       end
       it '配送料の負担が空白では登録できない' do
         @item.shipping_charge_id = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping charge can't be blank")
       end
-
-      it '発送元の地域が空白では登録できない' do
-        @item.state_id = nil
+      it '配送料の負担が"---"では登録できない' do
+        @item.shipping_charge_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("State can't be blank")
+        expect(@item.errors.full_messages).to include("Shipping charge must be other than 0")
       end
       it '発送元の地域が空白では登録できない' do
         @item.state_id = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("State can't be blank")
       end
-
-      it '発送までの日数が空白では登録できない' do
-        @item.shipping_day_id = nil
+      it '発送元の地域が"---"では登録できない' do
+        @item.state_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping day can't be blank")
+        expect(@item.errors.full_messages).to include("State must be other than 0")
       end
       it '発送までの日数が空白では登録できない' do
         @item.shipping_day_id = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping day can't be blank")
       end
+      it '発送までの日数が"---"では登録できない' do
+        @item.shipping_day_id = 0
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping day must be other than 0")
+      end
+      it '価格が空白では登録できない' do
+        @item.price = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price can't be blank")
+      end
+      it '価格が300円未満では登録できない' do
+        @item.price = 200
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+      end
+      it '価格が円未満では登録できない' do
+        @item.price = 10000000
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      end
 
-      it '価格が空白では登録できない' do
-        @item.price = nil
-        @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank")
-      end
-      it '価格が空白では登録できない' do
-        @item.price = nil
-        @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank")
-      end
-      
     end
 
   end

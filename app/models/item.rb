@@ -36,6 +36,7 @@ class Item < ApplicationRecord
     validates :condition_id
     validates :shipping_charge_id
     validates :state_id
+    validates :shipping_day_id
   end
 
 end
