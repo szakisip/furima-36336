@@ -19,7 +19,6 @@ class Item < ApplicationRecord
   #バリデーション
   #各項目
   with_options presence: true do
-    validates :user_id
     validates :image
     validates :product_name
     validates :description

@@ -39,7 +39,7 @@ RSpec.describe Item, type: :model do
 
     context '商品出品登録できないとき' do
       it '登録ユーザーでないと出品登録できない' do
-        @item.user_id = "未登録ユーザー"
+        @item.user_id = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("User must exist")
       end
