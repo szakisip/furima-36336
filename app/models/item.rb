@@ -27,7 +27,7 @@ class Item < ApplicationRecord
     validates :shipping_charge_id
     validates :state_id
     validates :shipping_day_id
-    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, only_integer: true }
   end
 
   #プルダウンを"---"選択時保存不可
