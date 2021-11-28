@@ -19,6 +19,8 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+  end
 
   # def destroy
   #   # ログインしているユーザーと同一であればデータを削除する
