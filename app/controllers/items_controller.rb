@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  # before_action :move_to_index, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -19,6 +18,26 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+    @item = Item.find(params[:id])
+  end
+
+  # def edit
+  #   @item = Item.find(params[:id])
+  #   if @item.user_id == current_user.id
+  #   else
+  #     redirect_to root_path
+  #   end
+  # end
+
+  # def update
+  #   @item = Item.find(params[:id])
+  #   if @item.update(item_params)
+  #     redirect_to item_path(item_params)
+  #   else
+  #     render 'edit'
+  #   end
+  # end
 
   # def destroy
   #   # ログインしているユーザーと同一であればデータを削除する
