@@ -1,6 +1,9 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
+  # 重複処理をまとめる
+  before_action :item_find, only:[:show, :edit, :update]
+
   def index
     @items = Item.includes(:user).order("created_at DESC")
   end
@@ -19,25 +22,21 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
-  # def edit
-  #   @item = Item.find(params[:id])
-  #   if @item.user_id == current_user.id
-  #   else
-  #     redirect_to root_path
-  #   end
-  # end
+  def edit
+    unless @item.user_id == current_user.id
+      redirect_to root_path
+    end
+  end
 
-  # def update
-  #   @item = Item.find(params[:id])
-  #   if @item.update(item_params)
-  #     redirect_to item_path(item_params)
-  #   else
-  #     render 'edit'
-  #   end
-  # end
+  def update
+    if @item.update(item_params)
+      redirect_to item_path(item_params)
+    else
+      render 'edit'
+    end
+  end
 
   # def destroy
   #   # ログインしているユーザーと同一であればデータを削除する
@@ -54,4 +53,9 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:image, :product_name, :description, :category_id, :condition_id, :shipping_charge_id, :state_id, :shipping_day_id, :price).merge(user_id: current_user.id)
   end
+
+  def item_find
+    @item = Item.find(params[:id])
+  end
+
 end
