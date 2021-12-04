@@ -4,6 +4,9 @@ class ItemsController < ApplicationController
   # 重複処理をまとめる
   before_action :item_find, only:[:show, :edit, :update, :destroy]
 
+  #出品者でなければトップページに遷移する
+  before_action :go_toppage, only:[:edit, :destroy]
+
   def index
     @items = Item.includes(:user).order("created_at DESC")
   end
@@ -41,10 +44,8 @@ class ItemsController < ApplicationController
   def destroy
     # ログインしているユーザーと同一であればデータを削除する
     if @item.user_id == current_user.id
-      @item.destroy
-      redirect_to root_path
-    else
-      redirect_to root_path
+       @item.destroy
+       redirect_to root_path
     end
   end
 
@@ -56,6 +57,12 @@ class ItemsController < ApplicationController
 
   def item_find
     @item = Item.find(params[:id])
+  end
+
+  def go_toppage
+    unless @item.user_id == current_user.id
+      redirect_to root_path
+    end
   end
 
 end
