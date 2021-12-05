@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   before_action :item_find, only:[:show, :edit, :update, :destroy]
 
   #出品者でなければトップページに遷移する
-  before_action :go_toppage, only:[:edit, :destroy]
+  before_action :go_toppage, only:[:edit, :update, :destroy]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
