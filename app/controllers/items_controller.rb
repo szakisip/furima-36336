@@ -28,9 +28,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    unless @item.user_id == current_user.id
-      redirect_to root_path
-    end
   end
 
   def update
@@ -42,11 +39,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    # ログインしているユーザーと同一であればデータを削除する
-    if @item.user_id == current_user.id
        @item.destroy
        redirect_to root_path
-    end
   end
 
   private
