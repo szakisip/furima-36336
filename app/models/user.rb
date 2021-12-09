@@ -14,5 +14,8 @@ class User < ApplicationRecord
   validates :first_rename,presence: true, format: {with: /\A[ァ-ヶー－]+\z/}
   validates :birthday,presence: true
 
+  #アソシエーション
   has_many :items
+  has_many :orders
+
 end
