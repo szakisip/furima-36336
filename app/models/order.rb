@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   #アソシエーション
   belongs_to :user
   belongs_to :item
-  has_one :order
+  has_one :buyer
 
   #バリデーション
 
