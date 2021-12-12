@@ -1,6 +1,6 @@
 class FormObject
   include ActiveModel::Model
-  attr_accessor :item_id, :user_id, :ostal_code, :state_id, :city, :address1, :address2, :telnumber
+  attr_accessor :item_id, :user_id, :postal_code, :state_id, :city, :address1, :address2, :telnumber
   
   #アクティブハッシュとアソシエーション
   # belongs_to :state
@@ -17,7 +17,7 @@ class FormObject
     validates :address1
     validates :telnumber
   end
-  validates :address2
+  validate :address2
 
   def save
     #購入履歴の保存し、変数orderに代入する
