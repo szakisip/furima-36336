@@ -12,7 +12,7 @@ RSpec.describe FormObject, type: :model do
       end
       it 'user_idが空でなければ保存できる' do
         @form_object.user_id = 1
-        expect(@form_object.to be_valid
+        expect(@form_object).to be_valid
       end
       it 'item_idが空でなければ保存できる' do
         @form_object.item_id = 1
@@ -58,17 +58,17 @@ RSpec.describe FormObject, type: :model do
       it '郵便番号が空だと保存できないこと' do
         @form_object.postal_code = nil
         @form_object.valid?
-        expect(@form_object.errors.full_messages).to include("Postal code can't be blank", 'postal_code is invalid. Include hyphen(-)')
+        expect(@form_object.errors.full_messages).to include("Postal code can't be blank", 'Postal code is invalid. Include hyphen(-)')
       end
       it '郵便番号にハイフンがないと保存できないこと' do
-        @form_object.postal_code = 1_234_567
+        @form_object.postal_code = 1234567
         @form_object.valid?
         expect(@form_object.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it '都道府県が「---」だと保存できないこと' do
         @form_object.state_id = 0
         @form_object.valid?
-        expect(@form_object.errors.full_messages).to include("State can't be blank")
+        expect(@form_object.errors.full_messages).to include("State must be other than 0")
       end
       it '都道府県が空だと保存できないこと' do
         @form_object.state_id = nil
@@ -88,17 +88,17 @@ RSpec.describe FormObject, type: :model do
       it '電話番号が空だと保存できないこと' do
         @form_object.telnumber = nil
         @form_object.valid?
-        expect(@form_object.errors.full_messages).to include("telnumber can't be blank")
+        expect(@form_object.errors.full_messages).to include("Telnumber can't be blank")
       end
       it '電話番号にハイフンがあると保存できないこと' do
         @form_object.telnumber = '123 - 1234 - 1234'
         @form_object.valid?
-        expect(@form_object.errors.full_messages).to include('telnumber is invalid')
+        expect(@form_object.errors.full_messages).to include('Telnumber is invalid')
       end
       it '電話番号が12桁以上あると保存できないこと' do
         @form_object.telnumber = 12_345_678_910_123_111
         @form_object.valid?
-        expect(@form_object.errors.full_messages).to include('telnumber is invalid')
+        expect(@form_object.errors.full_messages).to include('Telnumber is invalid')
       end
       it 'トークンが空だと保存できないこと' do
         @form_object.token = nil
