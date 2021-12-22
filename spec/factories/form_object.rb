@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :form_object do
-    user_id { '1' }
-    item_id { '1' }
+    
     postal_code { '123-4567' }
     state_id { '1' }
     city { '北海道市' }

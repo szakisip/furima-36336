@@ -15,7 +15,7 @@ class FormObject
     validates :state_id, numericality: { other_than: 0 }
     validates :city
     validates :address1
-    validates :telnumber, format: { with: /\A[0-9]{11}\z/ }
+    validates :telnumber, format: { with: /\A[0-9]{10,11}\z/ }
     # トークンのバリデーション
     validates :token
   end
