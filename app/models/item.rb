@@ -4,6 +4,7 @@ class Item < ApplicationRecord
   #アソシエーション
   #他テーブルとのアソシエーション
   belongs_to :user
+  has_one :order
 
   # アクティブハッシュとのアソシエーション
   belongs_to :category

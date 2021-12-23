@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   # 重複処理をまとめる
   before_action :item_find, only:[:show, :edit, :update, :destroy]
 
-  #出品者でなければトップページに遷移する
+  #出品者且つ未購入でなければトップページに遷移する
   before_action :go_toppage, only:[:edit, :update, :destroy]
 
   def index
@@ -54,7 +54,7 @@ class ItemsController < ApplicationController
   end
 
   def go_toppage
-    unless @item.user_id == current_user.id
+    unless @item.user_id == current_user.id && @item.order.nil?
       redirect_to root_path
     end
   end
